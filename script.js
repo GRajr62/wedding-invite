@@ -84,3 +84,85 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 
 });
+
+const form =
+document.getElementById("rsvp-form");
+
+const successMessage =
+document.getElementById("success-message");
+
+const scriptURL =
+"https://script.google.com/macros/s/AKfycbyHRSyVMlwtaY8CIwmX1TDtv-9hAaDsYH0ZaTl0d_ZMGd48k2EGcgZglHjwVtZMKqFk/exec";
+
+form.addEventListener(
+  "submit",
+  async (e) => {
+
+    e.preventDefault();
+
+    const wedding =
+      document.getElementById(
+        "wedding-attendance"
+      ).checked;
+
+    const reception =
+      document.getElementById(
+        "reception-attendance"
+      ).checked;
+
+    if (!wedding && !reception) {
+
+      successMessage.innerText =
+        "Please select Wedding, Reception, or both.";
+
+      return;
+    }
+
+    const payload = {
+
+      name:
+        document.getElementById("name").value,
+
+      phone:
+        document.getElementById("phone").value,
+
+      guests:
+        document.getElementById("guests").value,
+
+      wedding:
+        wedding ? "Yes" : "No",
+
+      reception:
+        reception ? "Yes" : "No",
+
+      message:
+        document.getElementById("message").value
+
+    };
+
+    try {
+
+      await fetch(scriptURL, {
+
+        method: "POST",
+
+        body:
+          JSON.stringify(payload)
+
+      });
+
+      successMessage.innerText =
+        "Thank you for your RSVP ❤️";
+
+      form.reset();
+
+    } catch (err) {
+
+      successMessage.innerText =
+        "Something went wrong.";
+
+      console.error(err);
+
+    }
+
+});
