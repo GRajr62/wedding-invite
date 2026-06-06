@@ -151,8 +151,9 @@ form.addEventListener(
 
       });
 
-      successMessage.innerText =
-        "Thank you for your RSVP ❤️";
+      document.getElementById(
+        "success-modal"
+      ).style.display = "flex";
 
       form.reset();
 
@@ -166,3 +167,227 @@ form.addEventListener(
     }
 
 });
+
+const closeModal =
+document.getElementById("close-modal");
+
+if(closeModal){
+
+    closeModal.addEventListener("click", () => {
+
+        document
+        .getElementById("success-modal")
+        .style.display = "none";
+
+    });
+
+}
+
+const galleryImages =
+document.querySelectorAll(
+  ".gallery-grid img"
+);
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+const lightbox =
+document.getElementById(
+  "lightbox"
+);
+
+const lightboxImage =
+document.getElementById(
+  "lightbox-image"
+);
+
+const closeLightbox =
+document.getElementById(
+  "close-lightbox"
+);
+
+const prevButton =
+document.getElementById(
+  "prev-image"
+);
+
+const nextButton =
+document.getElementById(
+  "next-image"
+);
+
+let currentIndex = 0;
+
+galleryImages.forEach(
+  (image,index) => {
+
+    image.addEventListener(
+      "click",
+      () => {
+
+        currentIndex = index;
+
+        lightboxImage.src =
+          image.src;
+
+        lightbox.style.display =
+          "flex";
+
+      }
+    );
+
+});
+
+function showImage(index){
+
+    if(index < 0){
+
+        index =
+        galleryImages.length - 1;
+    }
+
+    if(index >= galleryImages.length){
+
+        index = 0;
+    }
+
+    currentIndex = index;
+
+    lightboxImage.src =
+      galleryImages[
+        currentIndex
+      ].src;
+}
+
+prevButton.addEventListener(
+    "click",
+    showPreviousImage
+);
+
+nextButton.addEventListener(
+    "click",
+    showNextImage
+);
+
+closeLightbox.addEventListener(
+  "click",
+  () => {
+
+    lightbox.style.display =
+      "none";
+
+});
+
+lightbox.addEventListener(
+  "click",
+  (e) => {
+
+    if(e.target === lightbox){
+
+        lightbox.style.display =
+          "none";
+
+    }
+
+});
+
+lightbox.addEventListener(
+    "touchstart",
+    (e) => {
+
+        touchStartX =
+            e.changedTouches[0].screenX;
+
+    },
+    false
+);
+
+lightbox.addEventListener(
+    "touchend",
+    (e) => {
+
+        touchEndX =
+            e.changedTouches[0].screenX;
+
+        handleSwipe();
+
+    },
+    false
+);
+
+const menuToggle =
+document.getElementById(
+  "menu-toggle"
+);
+
+const navLinks =
+document.querySelector(
+  ".nav-links"
+);
+
+menuToggle.addEventListener(
+  "click",
+  () => {
+
+    navLinks.classList.toggle(
+      "active"
+    );
+
+});
+
+document
+.querySelectorAll(
+  ".nav-links a"
+)
+.forEach(link => {
+
+    link.addEventListener(
+      "click",
+      () => {
+
+        navLinks.classList.remove(
+          "active"
+        );
+
+      }
+    );
+
+});
+
+function showNextImage(){
+
+    currentIndex =
+        (currentIndex + 1)
+        % galleryImages.length;
+
+    lightboxImage.src =
+        galleryImages[currentIndex].src;
+}
+
+function showPreviousImage(){
+
+    currentIndex =
+        (currentIndex - 1 + galleryImages.length)
+        % galleryImages.length;
+
+    lightboxImage.src =
+        galleryImages[currentIndex].src;
+}
+
+function handleSwipe(){
+
+    const swipeDistance =
+        touchEndX - touchStartX;
+
+    if(swipeDistance > 50){
+
+        showPreviousImage();
+
+    }
+
+    if(swipeDistance < -50){
+
+        showNextImage();
+
+    }
+}
