@@ -1,0 +1,58 @@
+:root{
+    --forest:#5c7a63;
+    --sage:#a9b99f;
+    --cream:#faf7f2;
+    --gold:#c7b27a;
+    --text:#2f3a30;
+  }
+
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+  }
+  
+  .hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px;
+  }
+  
+  h1,h2,h3{
+    font-family:'Cormorant Garamond',serif;
+  }
+  
+  .section{
+    padding:80px 20px;
+    max-width:1100px;
+    margin:auto;
+  }
+  
+  .card-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+  }
+  
+  .card,
+  .venue-card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+  }
+  
+  .btn{
+    display:inline-block;
+    padding:12px 24px;
+    border-radius:30px;
+    background:var(--forest);
+    color:white;
+    text-decoration:none;
+    border:none;
+    cursor:pointer;
+  }

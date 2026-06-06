@@ -27,7 +27,7 @@
   }
   
   .section{
-    padding:80px 20px;
+    padding:120px 20px;
     max-width:1100px;
     margin:auto;
   }
@@ -56,3 +56,238 @@
     border:none;
     cursor:pointer;
   }
+
+  .hero{
+    height:100vh;
+
+    background:
+        linear-gradient(
+            rgba(250,247,242,.15),
+            rgba(250,247,242,.25)
+        ),
+        url("assets/images/hero-bg.png");
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+}
+
+.hero-content{
+    max-width:700px;
+}
+
+.hero h1{
+    font-size:5rem;
+    line-height:1.1;
+}
+
+
+/* ===========================
+   HERO IMPROVEMENTS
+=========================== */
+
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,.15);
+}
+
+.hero{
+    position:relative;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+}
+
+.small-text{
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--forest);
+}
+
+.hero h1{
+    font-size:clamp(3rem,8vw,6rem);
+    margin:20px 0;
+}
+
+.hero h1 span{
+    display:block;
+    color:var(--gold);
+}
+
+.tagline{
+    font-size:1.2rem;
+    max-width:500px;
+    margin:auto;
+    line-height:1.8;
+}
+
+.date{
+    font-size:1.3rem;
+    margin-top:20px;
+    color:var(--forest);
+}
+
+/* ===========================
+   COUNTDOWN
+=========================== */
+
+.timer{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-top:40px;
+}
+
+.timer div{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.timer span{
+    font-size:2.5rem;
+    font-weight:700;
+    color:var(--forest);
+}
+
+/* ===========================
+   EVENTS
+=========================== */
+
+.card{
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h3{
+    color:var(--forest);
+}
+
+/* ===========================
+   GALLERY
+=========================== */
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.gallery-placeholder{
+    height:280px;
+    background:white;
+    border-radius:20px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:var(--forest);
+
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+/* ===========================
+   MAPS
+=========================== */
+
+iframe{
+    width:100%;
+    height:350px;
+    border:none;
+    border-radius:15px;
+    margin:20px 0;
+}
+
+/* ===========================
+   RSVP
+=========================== */
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    max-width:700px;
+    margin:auto;
+}
+
+input,
+textarea,
+select{
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:1rem;
+}
+
+textarea{
+    min-height:120px;
+}
+
+/* ===========================
+   MUSIC BUTTON
+=========================== */
+
+#music-toggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+
+    width:60px;
+    height:60px;
+
+    border:none;
+    border-radius:50%;
+
+    background:var(--forest);
+    color:white;
+
+    cursor:pointer;
+
+    z-index:1000;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+    text-align:center;
+    padding:60px 20px;
+    background:#f2eee6;
+}
+
+footer h3{
+    color:var(--forest);
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    .hero h1{
+        font-size:3rem;
+    }
+
+    .timer{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}

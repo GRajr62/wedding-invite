@@ -15,51 +15,42 @@
 </head>
 <body>
 
-    <audio id="music">
-        <source
-            src="assets/music/wedding.mp3"
-            type="audio/mpeg">
-    </audio>
-    
-    <button id="music-toggle">
-        🎵
-    </button>
+<header class="hero">
 
-<section class="hero">
+```
+<button id="music-toggle">🎵 Music</button>
 
-    <div class="overlay"></div>
+<div class="hero-content">
 
-    <div class="hero-content">
+    <p class="welcome">
+        Together with our families
+    </p>
 
-        <p class="small-text">
-            Together with our families
-        </p>
+    <h1>
+        Gokul Raj R
+        <span>&</span>
+        Lekshmi Priya M S
+    </h1>
 
-        <h1>
-            Gokul Raj R
-            <span>&</span>
-            Lekshmi Priya M S
-        </h1>
+    <p class="tagline">
+        Two hearts, one journey, and a lifetime to go.
+    </p>
 
-        <p class="tagline">
-            Two hearts, one journey,
-            and a lifetime to go.
-        </p>
+    <p class="date">
+        12 July 2026
+    </p>
 
-        <p class="date">
-            12 July 2026
-        </p>
+    <a href="#countdown" class="btn">
+        Celebrate With Us
+    </a>
 
-        <a href="#events" class="btn">
-            View Events
-        </a>
+</div>
+```
 
-    </div>
+</header>
 
-</section>
-
-<section id="events" class="section">
-    <h2>Events</h2>
+<section id="countdown" class="section">
+    <h2>Countdown to Our Wedding</h2>
 
 ```
 <div class="timer">
@@ -69,12 +60,9 @@
     <div><span id="seconds">0</span><p>Seconds</p></div>
 </div>
 
-<a
-class="btn"
-target="_blank"
-href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding%20of%20Gokul%20Raj%20R%20and%20Lekshmi%20Priya%20M%20S">
-Add To Calendar
-</a>
+<button id="calendar-btn" class="btn">
+    Add Wedding To Calendar
+</button>
 ```
 
 </section>
@@ -112,19 +100,11 @@ Add To Calendar
 ```
 <h2>Our Gallery</h2>
 
-<div class="gallery-grid">
+<div class="gallery">
 
-    <div class="gallery-placeholder">
-        Photos Coming Soon
-    </div>
-
-    <div class="gallery-placeholder">
-        Photos Coming Soon
-    </div>
-
-    <div class="gallery-placeholder">
-        Photos Coming Soon
-    </div>
+    <div class="placeholder">Photo Coming Soon</div>
+    <div class="placeholder">Photo Coming Soon</div>
+    <div class="placeholder">Photo Coming Soon</div>
 
 </div>
 ```
@@ -219,15 +199,9 @@ Add To Calendar
 </section>
 
 <footer>
-
-    <h3>
-        We Can't Wait To Celebrate With You
-    </h3>
-
     <p>
         Gokul Raj R & Lekshmi Priya M S
     </p>
-
 </footer>
 
 <script src="script.js"></script>
