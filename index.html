@@ -15,17 +15,48 @@
 </head>
 <body>
 
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <img
+                src="assets/images/logo.png"
+                alt="Gokul & Lekshmi Logo">
+        
+        </div>
+    
+        <div class="nav-links">
+    
+            <a href="#home">Home</a>
+            <a href="#events">Events</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#venue">Venue</a>
+            <a href="#rsvp">RSVP</a>
+    
+        </div>
+
+        <button id="menu-toggle">
+            ☰
+        </button>
+
+        <div class="nav-actions">
+
+            <button id="music-toggle">
+                🎵
+            </button>
+    
+        </div>
+    
+    </nav>
+
     <audio id="music">
         <source
             src="assets/music/wedding.mp3"
             type="audio/mpeg">
     </audio>
     
-    <button id="music-toggle">
-        🎵
-    </button>
 
-<section class="hero">
+<section id="home" class="hero">
 
     <div class="overlay"></div>
 
@@ -37,7 +68,9 @@
 
         <h1>
             Gokul Raj R
+            <br>
             <span>&</span>
+            <br>
             Lekshmi Priya M S
         </h1>
 
@@ -59,7 +92,7 @@
 </section>
 
 <section id="events" class="section">
-    <h2>Countdown to our Big Day!</h2>
+    <h2>🌿 Countdown to our Big Day! 🌿</h2>
 
 
 <div class="timer">
@@ -69,20 +102,23 @@
     <div><span id="seconds">0</span><p>Seconds</p></div>
 </div>
 
-<a
-class="btn"
-target="_blank"
-href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding%20of%20Gokul%20Raj%20R%20and%20Lekshmi%20Priya%20M%20S">
-Add To Calendar
-</a>
+<div class="calendar-container">
 
+    <a
+        class="btn"
+        target="_blank"
+        href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding%20of%20Gokul%20Raj%20R%20and%20Lekshmi%20Priya%20M%20S">
+        Add To Calendar
+    </a>
+
+</div>
 
 </section>
 
 <section class="section">
 
 
-<h2>Events</h2>
+<h2>🌿 Events 🌿</h2>
 
 <div class="card-container">
 
@@ -107,82 +143,96 @@ Add To Calendar
 
 </section>
 
-<section class="section">
+<section id="gallery" class="section">
+    <h2>🌿 Our Gallery 🌿</h2>
 
+    <div class="gallery-grid">
 
-<h2>Our Gallery</h2>
-
-<div class="gallery-grid">
-
-    <div class="gallery-placeholder">
-        Photos Coming Soon
+        <img src="assets/gallery/1.jpg" alt="Gallery Image">
+        <img src="assets/gallery/2.jpg" alt="Gallery Image">
+        <img src="assets/gallery/3.jpg" alt="Gallery Image">
+        <img src="assets/gallery/4.jpg" alt="Gallery Image">
+        <img src="assets/gallery/5.jpg" alt="Gallery Image">
+        <img src="assets/gallery/6.jpeg" alt="Gallery Image">
+        <img src="assets/gallery/7.jpeg" alt="Gallery Image">
+        <img src="assets/gallery/8.jpg" alt="Gallery Image">
+    
     </div>
+    
+    <div id="lightbox" class="lightbox">
 
-    <div class="gallery-placeholder">
-        Photos Coming Soon
+        <span id="close-lightbox">&times;</span>
+    
+        <span id="prev-image" class="lightbox-arrow">
+            &#10094;
+        </span>
+    
+        <img
+            id="lightbox-image"
+            src=""
+            alt="Expanded Image">
+    
+        <span id="next-image" class="lightbox-arrow">
+            &#10095;
+        </span>
+    
     </div>
-
-    <div class="gallery-placeholder">
-        Photos Coming Soon
-    </div>
-
-</div>
 
 
 </section>
 
-<section class="section">
+<section id="venue" class="section">
+    <h2>🌿 Venue 🌿</h2>
 
 
-<h2>Venue</h2>
+    <div class="venue-container">
 
-<div class="venue-card">
-
-    <h3>Wedding Venue</h3>
-
-    <p>YR Mahal, Nagercoil</p>
-
-    <iframe
-        src="PASTE_YR_MAHAL_EMBED_URL_HERE"
-        loading="lazy">
-    </iframe>
-
-    <a
-        target="_blank"
-        href="https://maps.app.goo.gl/Fn27ZH1a8bU4p5qW7"
-        class="btn">
-        Get Directions
-    </a>
-
-</div>
-
-<div class="venue-card">
-
-    <h3>Reception Venue</h3>
-
-    <p>Ragam Convention Center, Kazhakuttom</p>
-
-    <iframe
-        src="PASTE_RAGAM_EMBED_URL_HERE"
-        loading="lazy">
-    </iframe>
-
-    <a
-        target="_blank"
-        href="https://maps.app.goo.gl/8jiFnUo5dyAd2L597"
-        class="btn">
-        Get Directions
-    </a>
-
-</div>
-
+        <div class="venue-card">
+    
+            <h3>Wedding Venue</h3>
+    
+            <p>YR Mahal, Nagercoil</p>
+    
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4890.196947596192!2d77.41666747584581!3d8.184501001634361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b04f0d9832b889b%3A0xfef33cea987d6e90!2sY.R.%20Mahal!5e1!3m2!1sen!2sin!4v1780736633999!5m2!1sen!2sin"
+                loading="lazy">
+            </iframe>
+    
+            <a
+                target="_blank"
+                href="https://maps.app.goo.gl/Fn27ZH1a8bU4p5qW7"
+                class="btn">
+                Get Directions
+            </a>
+    
+        </div>
+    
+        <div class="venue-card">
+    
+            <h3>Reception Venue</h3>
+    
+            <p>Ragam Convention Center, Kazhakuttom</p>
+    
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4885.218267051775!2d76.86291067584776!3d8.580562995845526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b05bfa41a3dae01%3A0x3ed912ec5ab2fa30!2sRagam%20Convention%20Centre!5e1!3m2!1sen!2sin!4v1780736754336!5m2!1sen!2sin"
+                loading="lazy">
+            </iframe>
+    
+            <a
+                target="_blank"
+                href="https://maps.app.goo.gl/8jiFnUo5dyAd2L597"
+                class="btn">
+                Get Directions
+            </a>
+    
+        </div>
+    
+    </div>
 
 </section>
 
-<section class="section">
-
-
-<h2>Kindly RSVP</h2>
+<section id="rsvp" class="section">
+    <h2>🌿 Kindly RSVP 🌿</h2>
 
 <form id="rsvp-form">
 
@@ -222,9 +272,9 @@ Add To Calendar
     </div>
 
     <textarea
-        id="message"
-        placeholder="Message For The Couple">
-    </textarea>
+    id="message"
+    placeholder="Leave your wishes and blessings for us ❤️"
+    rows="5"></textarea>
 
     <button
         type="submit"
@@ -245,11 +295,48 @@ Add To Calendar
         We Can't Wait To Celebrate With You
     </h3>
 
-    <p>
-        Gokul Raj R & Lekshmi Priya M S
+    <div class="footer-divider">
+        ♥
+    </div>
+
+    <p class="footer-names">
+        Gokul Raj R
+        <span>&</span>
+        Lekshmi Priya M S 
+    </p>
+
+    <div class="footer-divider">
+        ♥
+    </div>
+
+    <p class="footer-powered">
+        Powered by Colourshot Creations
     </p>
 
 </footer>
+
+
+<div id="success-modal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>❤️ Thank You ❤️</h2>
+
+        <p>
+            We can't wait to celebrate with you.
+        </p>
+
+        <p>
+            - Gokul & Lekshmi
+        </p>
+
+        <button id="close-modal" class="btn">
+            Close
+        </button>
+
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 
