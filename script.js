@@ -94,11 +94,29 @@ document.getElementById("success-message");
 const scriptURL =
 "https://script.google.com/macros/s/AKfycbyHRSyVMlwtaY8CIwmX1TDtv-9hAaDsYH0ZaTl0d_ZMGd48k2EGcgZglHjwVtZMKqFk/exec";
 
+let isSubmitting = false;
+
 form.addEventListener(
   "submit",
   async (e) => {
 
     e.preventDefault();
+
+    if(isSubmitting){
+      return;
+    }
+
+    const submitButton =
+      form.querySelector(
+        'button[type="submit"]'
+      );
+
+    isSubmitting = true;
+
+    submitButton.disabled = true;
+
+    submitButton.innerText =
+      "Submitting...";
 
     const wedding =
       document.getElementById(
@@ -114,6 +132,13 @@ form.addEventListener(
 
       successMessage.innerText =
         "Please select Wedding, Reception, or both.";
+
+      isSubmitting = false;
+
+      submitButton.disabled = false;
+
+      submitButton.innerText =
+        "Submit RSVP";
 
       return;
     }
@@ -140,32 +165,42 @@ form.addEventListener(
 
     };
 
-    try {
+  try {
 
-      await fetch(scriptURL, {
+    await fetch(scriptURL, {
 
-        method: "POST",
+      method: "POST",
 
-        body:
-          JSON.stringify(payload)
+      body:
+        JSON.stringify(payload)
 
-      });
+    });
 
-      document.getElementById(
-        "success-modal"
-      ).style.display = "flex";
+    document.getElementById(
+      "success-modal"
+    ).style.display = "flex";
 
-      form.reset();
+    form.reset();
 
-    } catch (err) {
+    submitButton.innerText =
+      "Submitted ✓";
 
-      successMessage.innerText =
-        "Something went wrong.";
+  } catch (err) {
 
-      console.error(err);
+    successMessage.innerText =
+      "Something went wrong.";
 
-    }
+    submitButton.disabled = false;
 
+    submitButton.innerText =
+      "Submit RSVP";
+
+    isSubmitting = false;
+
+    console.error(err);
+
+  }
+  
 });
 
 const closeModal =
