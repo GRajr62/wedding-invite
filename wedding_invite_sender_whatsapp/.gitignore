@@ -1,0 +1,7 @@
+config.json
+credentials/*.json
+.chrome-profile/
+.venv/
+__pycache__/
+*.pyc
+attachments/*.pdf

@@ -1,0 +1,26 @@
+{
+  "spreadsheet_id": "1jR6zJUnKCJemSDwWf3YX22lXD3DqMteyPLJZVQdesq4",
+  "google_service_account_json": "credentials/service-account.json",
+  "chrome_profile_dir": ".chrome-profile",
+  "headless": false,
+  "default_country_code": "91",
+  "status_header": "Status",
+  "dry_run": false,
+  "send_delay_seconds": 2,
+  "events": {
+    "Wedding": {
+      "sheet_name": "Wedding",
+      "template": "Hello,\n\nWith great happiness, I would like to invite you to join us as we celebrate our wedding. Your presence, love, and blessings will make our special day truly unforgettable.\n\nWe would be honored to have you with us.\n\nWarm regards,\nGokul Raj R",
+      "attachments": [
+        "attachments/wedding-invitation.pdf"
+      ]
+    },
+    "Reception": {
+      "sheet_name": "Reception",
+      "template": "Hello,\n\nAs we begin our journey together, we would be delighted to celebrate this joyful occasion with you. Please join us at our wedding reception and share in our happiness.\n\nWith warm regards,\nGokul Raj R",
+      "attachments": [
+        "attachments/reception-invitation.pdf"
+      ]
+    }
+  }
+}
