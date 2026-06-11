@@ -7,6 +7,7 @@
   "status_header": "Status",
   "dry_run": false,
   "send_delay_seconds": 2,
+  "attachment_send_delay_seconds": 2,
   "events": {
     "Wedding": {
       "sheet_name": "Wedding",

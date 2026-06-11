@@ -45,6 +45,7 @@ class AppConfig:
     status_header: str
     dry_run: bool
     send_delay_seconds: float
+    attachment_send_delay_seconds: float
     events: list[EventConfig]
 
 
@@ -80,6 +81,7 @@ def load_config(config_path: Path) -> AppConfig:
         status_header=raw.get("status_header", DEFAULT_STATUS_HEADER),
         dry_run=bool(raw.get("dry_run", False)),
         send_delay_seconds=float(raw.get("send_delay_seconds", 2)),
+        attachment_send_delay_seconds=float(raw.get("attachment_send_delay_seconds", 2)),
         events=events,
     )
 
@@ -234,6 +236,7 @@ def open_whatsapp(page):
 
 def send_whatsapp_message(
     page: Page,
+    config: AppConfig,
     phone: str,
     message: str,
     attachments: list[Path]
@@ -259,7 +262,7 @@ def send_whatsapp_message(
         print(f"Uploading: {attachment}")
 
         caption = message if index == 0 else ""
-        upload_document_attachment(page, attachment, caption)
+        upload_document_attachment(page, config, attachment, caption)
 
 
 def send_text_message(page: Page, message: str) -> None:
@@ -270,7 +273,7 @@ def send_text_message(page: Page, message: str) -> None:
     wait_for_message_to_send(page)
 
 
-def upload_document_attachment(page: Page, attachment: Path, caption: str) -> None:
+def upload_document_attachment(page: Page, config: AppConfig, attachment: Path, caption: str) -> None:
     open_attachment_menu(page)
 
     if not choose_document_file(page, attachment):
@@ -281,6 +284,7 @@ def upload_document_attachment(page: Page, attachment: Path, caption: str) -> No
     if caption:
         fill_attachment_caption(page, caption)
 
+    time.sleep(config.attachment_send_delay_seconds)
     click_attachment_send(page)
     wait_for_attachment_preview_to_close(page, attachment)
 
@@ -539,12 +543,23 @@ def load_events_with_rows(service: Any, config: AppConfig) -> list[LoadedEvent]:
     return loaded_events
 
 
-def process_event(service: Any, page: Page | None, config: AppConfig, loaded_event: LoadedEvent) -> None:
+def process_event(
+    service: Any,
+    page: Page | None,
+    config: AppConfig,
+    loaded_event: LoadedEvent,
+    remaining_limit: int | None,
+) -> int:
     event = loaded_event.event
     status_column_index = loaded_event.headers.index(config.status_header) + 1
 
     print(f"\nReading {len(loaded_event.rows)} rows from '{event.sheet_name}'...")
+    sent_count = 0
     for row in loaded_event.rows:
+        if remaining_limit is not None and sent_count >= remaining_limit:
+            print(f"Reached the send limit for '{event.sheet_name}', stopping this tab.")
+            break
+
         row_number = row["row_number"]
         data = row["data"]
         current_status = str(data.get(config.status_header, "")).strip().lower()
@@ -562,10 +577,11 @@ def process_event(service: Any, page: Page | None, config: AppConfig, loaded_eve
         print(f"Row {row_number}: sending {event.key} invite to {name or phone}...")
         if config.dry_run:
             print(f"DRY RUN -> phone={phone}, message={message!r}, attachments={event.attachments}")
+            sent_count += 1
             continue
 
         try:
-            send_whatsapp_message(page, phone, message, event.attachments)
+            send_whatsapp_message(page, config, phone, message, event.attachments)
             print(f"Row {row_number}: WhatsApp message sent successfully.")
             sent_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             update_status(
@@ -578,8 +594,11 @@ def process_event(service: Any, page: Page | None, config: AppConfig, loaded_eve
             )
             print(f"Row {row_number}: status updated to sent.")
             time.sleep(config.send_delay_seconds)
+            sent_count += 1
         except Exception as error:
             print(f"Row {row_number}: failed, status not updated. Error: {error}")
+
+    return sent_count
 
 
 def parse_args() -> argparse.Namespace:
@@ -590,7 +609,35 @@ def parse_args() -> argparse.Namespace:
         help="Path to config JSON. Defaults to wedding_invite_sender_whatsapp/config.json when run from this folder.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Print rows/messages without sending WhatsApp messages or updating status.")
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit how many people are processed in this run.",
+    )
     return parser.parse_args()
+
+
+def process_loaded_events(
+    service: Any,
+    page: Page | None,
+    config: AppConfig,
+    loaded_events: list[LoadedEvent],
+    limit: int | None,
+) -> None:
+    remaining_limit = limit
+    for loaded_event in loaded_events:
+        sent_count = process_event(
+            service,
+            page,
+            config,
+            loaded_event,
+            remaining_limit,
+        )
+        if remaining_limit is not None:
+            remaining_limit = max(remaining_limit - sent_count, 0)
+            if remaining_limit == 0:
+                break
 
 
 def main() -> None:
@@ -600,12 +647,14 @@ def main() -> None:
     if args.dry_run:
         config = AppConfig(**{**config.__dict__, "dry_run": True})
 
+    if args.limit is not None and args.limit < 1:
+        raise ValueError("--limit must be 1 or greater.")
+
     service = get_sheets_service(config.credentials_file)
     loaded_events = load_events_with_rows(service, config)
 
     if config.dry_run:
-        for loaded_event in loaded_events:
-            process_event(service, page=None, config=config, loaded_event=loaded_event)
+        process_loaded_events(service, page=None, config=config, loaded_events=loaded_events, limit=args.limit)
         return
 
     with sync_playwright() as playwright:
@@ -618,8 +667,7 @@ def main() -> None:
         page = browser_context.pages[0] if browser_context.pages else browser_context.new_page()
         open_whatsapp(page)
 
-        for loaded_event in loaded_events:
-            process_event(service, page, config, loaded_event)
+        process_loaded_events(service, page, config, loaded_events, args.limit)
 
         browser_context.close()
 
